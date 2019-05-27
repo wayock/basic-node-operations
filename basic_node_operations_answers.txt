@@ -1,32 +1,98 @@
 1. Run the commands sort, wc and uniq on the commands.js file. Explain how they work and what the output was.
 
+  sort commands.js:   returns the file sorted alphabetically by line.
+    output:
+        break;
+        break;
+        commandLibrary.cat(userInputArray.slice(1));
+        commandLibrary.echo(userInputArray.slice(1).join(" "));
+        done(data);
+        if (err) throw err;
+        case "cat":
+        case "echo":
+        const fileName = fullPath[0];
+        done(userInput);
+        fs.readFile(fileName, (err, data) => {
+        });
+        "cat": function(fullPath) {
+        "echo": function(userInput) {
+        const command = userInputArray[0];
+        const userInputArray = userInput.split(" ");
+        process.stdout.write('\nprompt > ');
+        process.stdout.write(output);
+        switch(command) {
+        }
+        }
+        },
+        const commandLibrary = {
+        const fs = require("fs");
+        function done(output){
+        function evaluateCmd(userInput){
+        module.exports.commandLibrary = commandLibrary;
+        module.exports.evaluateCmd = evaluateCmd;
+        }
+        }
+        };
 
 
+  wc commands.js:   prints newline, word, and byte counts for a file.
+    output: 35      70     780 commands.js
+
+
+  uniq commands.js:   sorts each line in a file and only returns different lines. If there is a line in a
+  file that is the same as a line above it, uniq removes it from the output.
+    output:
+        const fs = require("fs");
+
+        function done(output){
+        process.stdout.write(output);
+        process.stdout.write('\nprompt > ');
+        }
+        function evaluateCmd(userInput){
+        const userInputArray = userInput.split(" ");
+        const command = userInputArray[0];
+
+        switch(command) {
+        case "echo":
+          commandLibrary.echo(userInputArray.slice(1).join(" "));
+          break;
+        case "cat":
+          commandLibrary.cat(userInputArray.slice(1));
+          break;
+        }
+        }
+
+        const commandLibrary = {
+        "echo": function(userInput) {
+        done(userInput);
+        },
+        "cat": function(fullPath) {
+        const fileName = fullPath[0];
+        fs.readFile(fileName, (err, data) => {
+          if (err) throw err;
+          done(data);
+        });
+        }
+        };
 
 2. Using the pipe (|) connect at least two commands and run it on commands.js. Explain what the output was and
 why the specific data was outputted.
 
+  diff commands.js bash.js | wc
+    45     131    1093
 
+    This output `45     131    1093` is the word count of the differences between the two files commands.js
+    and bash.js
+
+    diff <filename1> <filename2>
+      Displays the differences between two files
+
+    wc
+      Displays print byte, word, and line counts
 
 6. In this checkpoint, you encountered built-in JavaScript methods as well as the new ES6 syntax.
 Review the information below before attempting the programming challenge.
 
-Arrow Functions =>: An Alternative Way to Write Functions
-//For functions with one argument
-// ES5
-var value = variableName.functionName(function (element) {
-   return element.doSomething();
-});
-// ES6
-var value = variableName.functionName(element => element.doSomething());
-
-//For functions with multiple arguments or no arguments
-// ES5
-var value = variableName.functionName(function (a,b) {
-   return a + b;
-}, 0);
-// ES6
-var value = variableName.functionName((a, b) => a + b, 0);
 Reverse String
 
 Given a string, reverse the order of characters in each word within a sentence while maintaining the original
@@ -37,58 +103,36 @@ Example
 Input: "I'm learning to program algorithms!"
 Output: "m'I gninrael ot margorp !smhtirogla"
 
-Hint: Look at the examples above to figure out how to refactor your forEach loop to use an arrow function.
 
-Concepts Arrow Function, JavaScript Functions
-
-Suggested Functions
-
-split()
-
-stringName.split(separator)
-Splits a string into an array of substrings, and returns the new array. The separator specifies how to split
-the string. If an empty string ('') is used as the separator (stringName.split('')) the string is split between
-each character. For example, 'Hello World'.split('') -> ['H','e','l','l','o', ' ', 'W', 'o', 'r', 'l', 'd'].
-If no separator is used, then the entire string will be returned as an array with one element.
-For example, 'Hello World'.split() -> ['Hello World']. Note that the split function does not change the
-original string so you must assign the result to a variable to keep the result.
-
-forEach()
-
-arrayName.forEach((currentItem) => {
-//your iterator
-})
-The forEach() method executes a provided function once for each array element.
-
-let arr = ['I', 'study', 'at', 'Bloc'];
-arr.forEach((element) => {
- console.log(element);
-});
-// The above code would print, 'I', 'study', 'at', 'Bloc', to the console.
-push()
-
-arrayName.push(element)
-Adds new items to the end of an array and returns the new length.
-
-reverse()
-
-arrayName.reverse();
-Reverses an array in place. The first element of the array will become the last, and the last array element
-will become the first.
-
-join()
-
-arrayName.join(separator)
-Joins all elements of an array into a string. The separator specifies a string to separate each element of
-the array by. If omitted, the array elements are seperated with a comma (','). Note that the join function
-does not change the original array so you must assign the result to a variable to keep the result.
-
-let arr = ['Hello', 'World'];
-arr.join(); // 'Hello,World'
-arr.join(''); // 'HelloWorld'
-arr.join(' '); // 'Hello World'
 Starter Code
 
 function reverseString(inputString) {
-   //solve problem
+   return inputString.split('').reverse().join('').split(' ').reverse().join(' ');
 }
+
+console.log(reverseString('Hello World')); //prints "olleH dlroW"
+console.log(reverseString("I'm learning to program algorithms!")); //prints "m'I gninrael ot margorp !smhtirogla"
+
+//The following also works:
+function reverseString(inputString) {
+  let input = inputString.split(" ");
+
+  let reversedWord = [];
+
+  input.forEach(word => {
+    let wordArray = word.split("");
+    wordArray.reverse();
+    reversedWord.push(wordArray.join(""));
+  });
+  return reversedWord.join(" ");
+}
+
+console.log(reverseString("Hello World")); // prints "olleH dlroW"
+console.log(reverseString("I'm learning to program algorithms!")); // prints "m'I gninrael ot margorp !smhtirogla"
+
+/* Helpful Links:
+Command line Commands list: https://ss64.com/bash/
+Codecademy List: https://www.codecademy.com/articles/command-line-commands
+Node documentation: https://nodejs.org/docs/latest-v8.x/api/fs.html#fs_fs_readfile_path_options_callback
+
+*/
